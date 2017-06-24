@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>色子</title>
+	<style>
+		*{margin:0;padding:0}
+		.stage{
+			width: 400px;
+			height: 400px;
+			margin:100px auto 0;
+			perspective:1600px;
+		}
+		#cube{
+			width: 400px;
+			height: 400px;
+			position:relative;
+			transform:rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+			transform-style:preserve-3d;
+			transition:all 8s ease 0s;
+		}
+		#cube li{
+			width: 400px;
+			height: 400px;
+			list-style-type:none;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+
+		/*前面*/
+		#cube li:nth-child(1){
+			background: url('08/1.jpg');
+			transform:translateZ(200px);
+			z-index:1;
+		}
+		/*上面*/
+		#cube li:nth-child(2){
+			background: url('08/2.jpg');
+			/*display:none;*/
+			transform:rotateX(90deg) translateZ(200px);
+		}
+		/*后面*/
+		#cube li:nth-child(3){
+			background: url('08/3.jpg');
+			/*display:none;*/
+			transform:rotateX(180deg) translateZ(200px);
+		}
+		/*下面*/
+		#cube li:nth-child(4){
+			background: url('08/4.jpg');
+			/*display:none;*/
+			transform:rotateX(270deg) translateZ(200px);
+		}
+		/*左面*/
+		#cube li:nth-child(5){
+			background: url('08/5.jpg');
+			/*display:none;*/
+			transform:rotateY(-90deg) translateZ(200px);
+		}
+		/*右面*/
+		#cube li:nth-child(6){
+			background: url('08/6.jpg');
+			/*display:none;*/
+			transform:rotateY(90deg) translateZ(200px);
+		}
+	</style>
+	<script>
+		window.onload = function(){
+			var cube = document.getElementById('cube'),
+			cube_lis = cube.getElementsByTagName('li'),
+			click_count = 0,
+			on = true;  //click_count为点击次数
+
+			//需要转的角度
+			var degrees = [
+							[0, 0, 0],    /*上面*/
+							[-90, 0, 0],
+							[-180, 0, 0],
+							[-270, 0, 0],
+							[0, 90, 0],
+							[0, -90, 0]
+						  ];
+				cube.onclick = function(e){
+					if(on){
+						on = false;
+						click_count++;
+					//在0~5之间取一个随机整数，作为色子面的索引值
+					var li_index = Math.floor(Math.random()*degrees.length);
+
+					//转的角度为：degrees[li_index]
+					cube.style.transform='rotateX('+ (click_count*2*360+degrees[li_index][0]) +'deg) rotateY('+ (click_count*2*360+degrees[li_index][1]) +'deg) rotateZ('+ (click_count*2*360+degrees[li_index][2]) +'deg)';
+					//click_count为点击次数	
+					setTimeout(function(){
+					on = true;}
+					,8000)			
+					}
+
+
+				}
+
+					
+			
+
+		}
+	</script>
+</head>
+<body>
+	<div class="stage">
+		<ul id="cube">   <!--ul表示立方体，li表示立方体的面-->
+			<li>前面</li>
+			<li>上面</li>
+			<li>后面</li>
+			<li>下面</li>
+			<li>左面</li>
+			<li>右面</li>
+		</ul>
+	</div>
+</body>
+</html>
